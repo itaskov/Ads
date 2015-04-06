@@ -79,6 +79,7 @@
     <Content Include="app\templates\register.html" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Icon.png" />
+    <Content Include="images\loading.jpg" />
     <Content Include="index.html" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />

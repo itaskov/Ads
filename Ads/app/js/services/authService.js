@@ -1,43 +1,58 @@
 ﻿'use strict';
 
 app.factory('authService',
-    function ($http, baseServiceUrl) {
-        return {
-            login: function (userData, success, error) {
-                // TODO
-            },
+  function ($http, baseServiceUrl) {
+      return {
+          login: function (userData, success, error) {
+              var request = {
+                  method: 'POST',
+                  url: baseServiceUrl + '/api/user/login',
+                  data: userData
+              };
+              $http(request).success(function (data) {
+                  sessionStorage['currentUser'] = JSON.stringify(data);
+                  success(data);
+              }).error(error);
+          },
 
-            register: function (userData, success, error) {
-                // TODO
-            },
+          // TODO: implement “register” function (just like the login)
 
-            logout: function () {
-                // TODO
-            },
+          logout: function () {
+              delete sessionStorage['currentUser'];
+          },
 
-            getCurrentUser: function () {
-                // TODO
-            },
+          getCurrentUser: function () {
+              var userObject = sessionStorage['currentUser'];
+              if (userObject) {
+                  return JSON.parse(sessionStorage['currentUser']);
+              }
+          },
 
-            isAnonymous: function () {
-                // TODO
-            },
+          isAnonymous: function () {
+              return sessionStorage['currentUser'] == undefined;
+          },
 
-            isLoggedIn: function () {
-                // TODO
-            },
+          isLoggedIn: function () {
+              // TODO: implement this (similar to isAnonymous())
+          },
 
-            isNormalUser: function () {
-                // TODO
-            },
+          isNormalUser: function () {
+              var currentUser = this.getCurrentUser();
+              return (currentUser != undefined) && (!currentUser.isAdmin);
+          },
 
-            isAdmin: function () {
-                // TODO
-            },
+          isAdmin: function () {
+              // TODO: implement this (similar to isNormalUser())
+          },
 
-            getAuthHeaders: function () {
-                // TODO
-            }
-        }
-    }
+          getAuthHeaders: function () {
+              var headers = {};
+              var currentUser = this.getCurrentUser();
+              if (currentUser) {
+                  headers['Authorization'] = 'Bearer ' + currentUser.access_token;
+              }
+              return headers;
+          }
+      }
+  }
 );

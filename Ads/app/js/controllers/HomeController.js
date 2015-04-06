@@ -8,11 +8,13 @@ app.controller('HomeController', function ($scope, adsService, notifyService, pa
         'pageSize': pageSize
     };
 
+    $scope.loading = false;
     $scope.reloadAds = function () {
         adsService.getAds(
-            null,
+            $scope.adsParams,
             function success(data) {
                 $scope.ads = data;
+                $scope.loading = true;
             },
             function error(err) {
                 notifyService.showError("Cannot load ads", err);
@@ -21,6 +23,20 @@ app.controller('HomeController', function ($scope, adsService, notifyService, pa
     };
 
     $scope.reloadAds();
+
+    // This event is sent by RightSideBarController when the current category is changed
+    $scope.$on("categorySelectionChanged", function(event, selectedCategoryId) {
+        $scope.adsParams.categoryId = selectedCategoryId;
+        $scope.adsParams.startPage = 1;
+        $scope.reloadAds();
+    });
+
+    $scope.$on("townSelectionChanged", function (event, selectedTownId) {
+        $scope.adsParams.townId = selectedTownId;
+        $scope.adsParams.startPage = 1;
+        $scope.reloadAds();
+    });
+
 
     }
 );
