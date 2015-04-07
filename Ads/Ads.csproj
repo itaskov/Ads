@@ -63,14 +63,17 @@
     <Content Include="app\js\controllers\HomeController.js" />
     <Content Include="app\js\controllers\RegisterController.js" />
     <Content Include="app\js\controllers\RightSidebarController.js" />
+    <Content Include="app\js\controllers\UserPublishNewAdController.js" />
     <Content Include="app\js\services\adsService.js" />
     <Content Include="app\js\services\authService.js" />
     <Content Include="app\js\services\notifyService.js" />
+    <Content Include="app\js\services\userService.js" />
     <Content Include="app\templates\home.html" />
     <Content Include="app\templates\login.html" />
     <Content Include="app\templates\partial\header.html" />
     <Content Include="app\templates\partial\left-sidebar.html" />
     <Content Include="app\templates\partial\right-sidebar.html" />
+    <Content Include="app\templates\user\publish-new-ad.html" />
     <Content Include="Content\app.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />

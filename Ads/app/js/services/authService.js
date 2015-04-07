@@ -14,15 +14,15 @@ app.factory('authService', function ($http, baseServiceUrl) {
               }).error(error);
           },
 
-          register: function (userData, succes, error) {
-              var reguest = {
+          register: function (userData, success, error) {
+              var request = {
                   method: 'POST',
                   url: baseServiceUrl + '/api/user/register',
                   data: userData
               };
-              $http(reguest).succes(function (data) {
+              $http(request).success(function (data) {
                   sessionStorage['currentUser'] = JSON.stringify(data);
-                  succes(data);
+                  success(data);
               }).error(data);
           },
 
