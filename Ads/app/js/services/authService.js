@@ -1,7 +1,6 @@
 ﻿'use strict';
 
-app.factory('authService',
-  function ($http, baseServiceUrl) {
+app.factory('authService', function ($http, baseServiceUrl) {
       return {
           login: function (userData, success, error) {
               var request = {
@@ -15,7 +14,17 @@ app.factory('authService',
               }).error(error);
           },
 
-          // TODO: implement “register” function (just like the login)
+          register: function (userData, succes, error) {
+              var reguest = {
+                  method: 'POST',
+                  url: baseServiceUrl + '/api/user/register',
+                  data: userData
+              };
+              $http(reguest).succes(function (data) {
+                  sessionStorage['currentUser'] = JSON.stringify(data);
+                  succes(data);
+              }).error(data);
+          },
 
           logout: function () {
               delete sessionStorage['currentUser'];
@@ -33,7 +42,8 @@ app.factory('authService',
           },
 
           isLoggedIn: function () {
-              // TODO: implement this (similar to isAnonymous())
+              return sessionStorage['currentUser'] != undefined;
+              //return !!sessionStorage['currentUser'];
           },
 
           isNormalUser: function () {
@@ -42,7 +52,8 @@ app.factory('authService',
           },
 
           isAdmin: function () {
-              // TODO: implement this (similar to isNormalUser())
+              var currentUser = this.getCurrentUser();
+              return (currentUser != undefined) && (currentUser.isAdmin);
           },
 
           getAuthHeaders: function () {
